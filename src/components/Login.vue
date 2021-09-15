@@ -32,7 +32,8 @@
                         <input type="password" id="password"
                                class="form-control form-control-lg"
                                v-model="password"
-                               required/>
+                               required
+                        />
                         <label class="form-label" for="password">Password</label>
                       </div>
 

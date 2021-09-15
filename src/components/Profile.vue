@@ -9,6 +9,12 @@
 
           <form class="p-3 mb-3"
           >
+            <div class="text-danger"
+            v-if="$store.state.editMessage"
+            >
+              {{ this.$store.state.editMessage }}
+            </div>
+
             <div class="form-outline mb-4">
               <input
                   required
@@ -48,12 +54,12 @@ export default {
   },
   methods: {
     submit() {
-    const  jsData = {
-        "name":this.name,
-        "email":this.email,
+      this.$store.state.editMessage = []
+      const jsData = {
+        "name": this.name,
+        "email": this.email,
       }
-      console.log(jsData)
-      this.$store.dispatch('editProfile',jsData)
+      this.$store.dispatch('editProfile', jsData)
     }
   }
 }

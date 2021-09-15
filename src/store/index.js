@@ -11,7 +11,7 @@ export default new Vuex.Store({
         isLogged: false,
         loginMessage: [],
         registerMessage:[],
-        editMessage:[],
+        editMessage: null,
         userData: [],
         ListOfRegions: [],
         userLicences: [],
@@ -166,8 +166,10 @@ export default new Vuex.Store({
             await axios.patch('http://127.0.0.1:8000/api/profile/edit',data ,config)
                 .then((response) => {
                     if (response.status === 200) {
-                        console.log(response)
-                        context.commit('setEditMessage', response.data)
+                        context.state.editMessage = null
+                        context.state.userData.name = data.name
+                        context.commit('setEditMessage', response.data.message)
+
                     }
                 })
                 .catch((error) => {
