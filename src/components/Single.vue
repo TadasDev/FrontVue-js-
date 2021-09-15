@@ -16,8 +16,12 @@
 
             <div class="d-flex justify-content-end"
                  style="width: 750px">
-            </div>
+            </div >
             <h5>
+              Fisherman name
+            </h5>
+              {{this.$store.state.userData.name}}
+            <h5 class="pass-half">
               Fisherman Address
             </h5>
             {{ single.address }}
@@ -29,6 +33,7 @@
               Expires at
             </h5>
             {{ single.valid_to }}
+
             <h5 class="pass-half">
               Equipment details
             </h5>

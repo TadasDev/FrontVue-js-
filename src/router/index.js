@@ -6,6 +6,7 @@ import LoginPage from "@/views/LoginPage";
 import Main from "@/views/Main";
 import Licence from "@/views/Licence";
 import Single from "@/components/Single";
+import UserProfile from "@/views/UserProfile";
 
 
 Vue.use(VueRouter)
@@ -14,17 +15,26 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      requiresAuth: false,
+    },
   },
   {
     path: '/register',
     name: 'RegisterPage',
-    component: RegisterPage
+    component: RegisterPage,
+    meta: {
+      requiresAuth: false,
+    },
   },
   {
     path: '/login',
     name: 'LoginPage',
     component: LoginPage,
+    meta: {
+      requiresAuth: false,
+    },
 
   },
   {
@@ -49,7 +59,15 @@ const routes = [
     component: Single,
     meta: {
       requiresAuth: true
-    },
+    }
+  },
+  {
+    path: '/my-profile',
+    name: 'UserProfile',
+    component: UserProfile,
+    meta: {
+      requiresAuth: true
+    }
 
   },
 

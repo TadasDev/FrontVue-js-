@@ -12,7 +12,7 @@
 
       <span class="input-group-text "
             style="width: 12%"
-            id="s">Address</span>
+            id="s">Home address</span>
         <input type="text"
                id="address"
                class="form-control "
@@ -90,11 +90,11 @@
           {{ region.region }}
         </option>
       </select>
-      <div >
+      <div>
         <div
             class=" bg-light text-success"
             v-if="!$store.state.message">
-          {{$store.state.successMessage}}
+          {{ $store.state.successMessage }}
         </div>
 
       </div>
@@ -174,7 +174,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getRegions')
-    this.$store.dispatch('getLicence')
 
   },
   created() {

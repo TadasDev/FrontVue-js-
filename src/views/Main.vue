@@ -1,7 +1,7 @@
 <template>
-<div class="img-fluid">
-  <ComponentMain />
-</div>
+  <div class="img-fluid">
+    <ComponentMain/>
+  </div>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ import ComponentMain from "@/components/ComponentMain";
 
 export default {
   name: "Booking",
-  components:{
+  components: {
     ComponentMain
   }
 }

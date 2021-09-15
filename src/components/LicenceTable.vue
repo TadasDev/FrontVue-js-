@@ -56,6 +56,9 @@ export default {
     licences() {
       return this.$store.state.userLicences
     }
+  },
+  created() {
+    this.$store.dispatch('getLicence')
   }
 }
 </script>

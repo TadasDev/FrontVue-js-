@@ -9,16 +9,17 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         isLogged: false,
-        message: [],
+        loginMessage: [],
+        registerMessage:[],
+        editMessage:[],
         userData: [],
         ListOfRegions: [],
         userLicences: [],
         prices: [],
-        successMessage:null
     },
     mutations: {
         sendMessage(state, data) {
-            state.message = data
+            state.registerMessage = data
         },
         error(state, response) {
             state.error = response
@@ -36,14 +37,17 @@ export default new Vuex.Store({
         SetPriceList(state, prices) {
             state.prices = prices
         },
+        setEditMessage(state,message){
+            state.editMessage = message
+        }
     },
     actions: {
         async login(context, data) {
             await axios.post('http://127.0.0.1:8000/api/login', data)
                 .then((response) => {
                     if (response.status === 200) {
+                        context.state.userData = response.data.user
                         localStorage.setItem('token', response.data.token)
-                        context.commit('sendMessage', response.data.message)
                         // context.commit('setToken', response.data.token)
                         router.push('/buy-licence')
                         context.state.isLogged = true
@@ -52,7 +56,7 @@ export default new Vuex.Store({
                 .catch((error) => {
                     if (error) {
                         console.log(error.response.data.message)
-                        context.state.message = error.response.data.message
+                        context.state.loginMessage.push(error.response.data.message)
                     }
                 });
         },
@@ -102,15 +106,13 @@ export default new Vuex.Store({
                 headers: {Authorization: `Bearer ${token}`}
             };
 
-            await axios.post('http://127.0.0.1:8000/api/buyLicence', data, config)
+            await axios.post('http://127.0.0.1:8000/api/buy-licence', data, config)
                 .then((response) => {
                     if (response.status === 200) {
-                        console.log(response)
                         context.state.message = response.data.errors
-                        context.state.successMessage = 'You have paid !'
                         router.push('/licence-list')
                         context.state.userLicences.push(data)
-                        axios.get('http://127.0.0.1:8000/api/fishinglicence', config)
+                        axios.get('http://127.0.0.1:8000/api/fishing-licence', config)
                             .then((response) => {
                                 if (response.status === 200) {
                                     context.commit('setLicence', response.data)
@@ -132,7 +134,7 @@ export default new Vuex.Store({
                 headers: {Authorization: `Bearer ${token}`}
             };
 
-            await axios.get('http://127.0.0.1:8000/api/fishinglicence', config)
+            await axios.get('http://127.0.0.1:8000/api/fishing-licence', config)
                 .then((response) => {
                     if (response.status === 200) {
                         context.commit('setLicence', response.data)
@@ -156,7 +158,22 @@ export default new Vuex.Store({
                     console.log(error)
                 });
         },
-
+        async editProfile(context,data) {
+            const token = localStorage.getItem('token')
+            const config = {
+                headers: {Authorization: `Bearer ${token}`}
+            };
+            await axios.patch('http://127.0.0.1:8000/api/profile/edit',data ,config)
+                .then((response) => {
+                    if (response.status === 200) {
+                        console.log(response)
+                        context.commit('setEditMessage', response.data)
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+        }
     },
     modules: {}
 })

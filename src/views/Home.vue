@@ -7,6 +7,7 @@
 <script>
 
 import HomeMain from "@/components/HomeMain";
+
 export default {
   name: 'Home',
   components: {

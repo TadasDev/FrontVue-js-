@@ -12,17 +12,18 @@
                 <div class="card" style="border-radius: 15px;">
                   <div class="card-body p-5">
                     <h2 class="text-uppercase text-center mb-5">Login</h2>
+                      <div class="text-danger"
+                           v-for="(message,index) in $store.state.loginMessage" :key="index">
+                        {{ message }}
+                      </div>
                     <form>
 
                       <div class="alert-danger">
-                        <div v-if="$store.state.message === null">
-                          {{ $store.state.message }}
-                        </div>
 
                       </div>
                       <div class="form-outline mb-4">
                         <input type="email" id="email" class="form-control form-control-lg"
-                               v-model="data['email']"
+                               v-model="email"
                                required/>
                         <label class="form-label" for="email">Your Email</label>
                       </div>
@@ -30,7 +31,7 @@
                       <div class="form-outline mb-4">
                         <input type="password" id="password"
                                class="form-control form-control-lg"
-                               v-model="data['password']"
+                               v-model="password"
                                required/>
                         <label class="form-label" for="password">Password</label>
                       </div>
@@ -67,25 +68,26 @@
 <script>
 
 
-
 export default {
   name: "Login",
 
   data() {
     return {
-      data: [],
+      email:null,
+      password:null
     }
   },
   methods: {
     submit() {
-      const jsonData = {
-        "email": this.data.email,
-        "password": this.data.password,
-      }
-      this.$store.dispatch('login',jsonData)
-    }
-  }
 
+      this.$store.state.loginMessage = []
+      const jsonData = {
+        "email": this.email,
+        "password": this.password,
+      }
+      this.$store.dispatch('login', jsonData)
+      }
+  }
 }
 </script>
 
